@@ -83,8 +83,11 @@ RSpec.describe Invoices do
       expect(invoice.lines.count).to eq(32)
     end
 
-
-
+    it 'The whole invoice: total amount without taxes 104,90 €, VAT 11,22 €, total amount 116,12 €' do
+      expect(invoice.total.before_tax.round(2)).to eq('104.90'.to_d)
+      expect(invoice.total.tax.round(2)).to eq('11.22'.to_d)
+      expect(invoice.total.after_tax.round(2)).to eq('116.12'.to_d)
+    end
   end
 
 end
