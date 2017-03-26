@@ -1,5 +1,6 @@
 require "invoices/version"
 require 'bigdecimal'
+require 'bigdecimal/util'
 
 module Invoices
 

@@ -17,6 +17,22 @@ RSpec.describe Invoices do
     it 'should add up all lines' do
       expect(invoice.total.num_lines).to eq(3)
     end
+
+    it 'should group lines by tax rate' do
+      expect(invoice.sub_totals.keys).to match_array(['10'.to_d, '20'.to_d])
+    end
+
+    it 'should get subtotals right' do
+      sub10 = invoice.sub_totals['10'.to_d]
+      expect(sub10.before_tax).to eq('5'.to_d)
+      expect(sub10.after_tax).to eq('5.5'.to_d)
+    end
+
+    it 'should get total right' do
+      expect(invoice.total.before_tax).to eq('7.4'.to_d)
+      expect(invoice.total.after_tax).to eq('8.38'.to_d)
+    end
+
   end
 
 end
