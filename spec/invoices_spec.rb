@@ -36,7 +36,7 @@ RSpec.describe Invoices do
 
 
 
-  context 'creating the sample invoice' do
+  context 'creating the sample invoice from requirements' do
     invoice_lines = <<~END
       PRINGLES CEBOLLA 190 GR         |     2     |     1,7364 € |    10     |
       BARRITAS HUESITOS PACK 12X20GR  |     1     |     2,3000 € |    10     |
