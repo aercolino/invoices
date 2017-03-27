@@ -63,7 +63,21 @@ module Invoices
 
 
 
-  class TotalByTaxRate
+  class Total
+    def for_accounting
+      b = before_tax.round(2)
+      t = tax.round(2)
+      {
+          before_tax: b,
+          tax: t,
+          after_tax: b + t
+      }
+    end
+  end
+
+
+
+  class TotalByTaxRate < Total
 
     attr_reader :tax_rate, :before_tax, :tax, :after_tax, :num_lines
 
@@ -80,7 +94,7 @@ module Invoices
 
 
 
-  class GrandTotal
+  class GrandTotal < Total
 
     attr_reader :before_tax, :tax, :after_tax, :num_lines
 

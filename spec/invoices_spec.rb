@@ -9,9 +9,9 @@ RSpec.describe Invoices do
 
   context 'creating an invoice' do
     invoice = Invoices::Invoice.new [
-      Invoices::Line.new(article:'one',   units:'1', price:'1.1', tax_rate:'10'),
-      Invoices::Line.new(article:'two',   units:'2', price:'1.2', tax_rate:'20'),
-      Invoices::Line.new(article:'three', units:'3', price:'1.3', tax_rate:'10'),
+        Invoices::Line.new(article:'one',   units:'1', price:'1.1', tax_rate:'10'),
+        Invoices::Line.new(article:'two',   units:'2', price:'1.2', tax_rate:'20'),
+        Invoices::Line.new(article:'three', units:'3', price:'1.3', tax_rate:'10'),
     ]
 
     it 'should add up all lines' do
@@ -87,6 +87,22 @@ RSpec.describe Invoices do
       expect(invoice.total.before_tax.round(2)).to eq('104.90'.to_d)
       expect(invoice.total.tax.round(2)).to eq('11.22'.to_d)
       expect(invoice.total.after_tax.round(2)).to eq('116.12'.to_d)
+    end
+  end
+
+
+
+  context 'when prices could cause rounding issues' do
+    invoice = Invoices::Invoice.new [
+        Invoices::Line.new(article:'four',   units:'1', price:'12.3456', tax_rate:'10'),
+        Invoices::Line.new(article:'five',   units:'1', price:'23.4567', tax_rate:'20'),
+    ]
+
+    it 'should get data for accounting right' do
+      expect(invoice.sub_totals['10'.to_d].for_accounting[:before_tax]).to eq('12.35'.to_d)
+      expect(invoice.sub_totals['20'.to_d].for_accounting[:before_tax]).to eq('23.46'.to_d)
+
+      expect(invoice.total.for_accounting[:before_tax]).to eq('35.80'.to_d)  # instead of 35.81
     end
   end
 
