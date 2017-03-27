@@ -99,10 +99,10 @@ RSpec.describe Invoices do
     ]
 
     it 'should get data for accounting right' do
-      expect(invoice.sub_totals['10'.to_d].for_accounting[:before_tax]).to eq('12.35'.to_d)
-      expect(invoice.sub_totals['20'.to_d].for_accounting[:before_tax]).to eq('23.46'.to_d)
+      expect(invoice.sub_totals['10'.to_d].for_accounting.before_tax).to eq('12.35'.to_d)
+      expect(invoice.sub_totals['20'.to_d].for_accounting.before_tax).to eq('23.46'.to_d)
 
-      expect(invoice.total.for_accounting[:before_tax]).to eq('35.80'.to_d)  # instead of 35.81
+      expect(invoice.total.for_accounting.before_tax).to eq('35.80'.to_d)  # instead of 35.81
     end
   end
 
