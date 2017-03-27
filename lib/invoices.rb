@@ -39,7 +39,7 @@ module Invoices
         tax += sub_total.tax
         num_lines += sub_total.num_lines
       end
-      GrandTotal.new(before_tax: before_tax, tax: tax, num_lines: num_lines)
+      Total.new(before_tax: before_tax, tax: tax, num_lines: num_lines)
     end
 
   end
@@ -63,7 +63,7 @@ module Invoices
 
 
 
-  class GrandTotal
+  class Total
 
     attr_reader :before_tax, :tax, :after_tax, :num_lines
 
@@ -76,14 +76,14 @@ module Invoices
     end
 
     def for_accounting
-      GrandTotal.new(before_tax: before_tax.round(2), tax: tax.round(2), num_lines: num_lines)
+      Total.new(before_tax: before_tax.round(2), tax: tax.round(2), num_lines: num_lines)
     end
 
   end
 
 
 
-  class TotalByTaxRate < GrandTotal
+  class TotalByTaxRate < Total
 
     attr_reader :tax_rate
 
