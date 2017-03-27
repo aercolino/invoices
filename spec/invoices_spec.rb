@@ -102,6 +102,11 @@ RSpec.describe Invoices do
       expect(invoice.sub_totals['10'.to_d].for_accounting.before_tax).to eq('12.35'.to_d)
       expect(invoice.sub_totals['20'.to_d].for_accounting.before_tax).to eq('23.46'.to_d)
 
+      # see "Consulta Vinculante D.G.T. de 5 de julio de 2006" at https://goo.gl/x5bDw5
+      # [...] Por tanto, las exigencias del artículo 6.1 letra f) relativa a la "descripción de la operación" se
+      # estimarán cumplidas siempre que la información aportada a la Administración Tributaria sea lo suficientemente
+      # ilustrativa de la operación, aunque existan discrepancias insignificantes en los cálculos aritméticos por
+      # efecto de los redondeos.
       expect(invoice.total.for_accounting.before_tax).to eq('35.80'.to_d)  # instead of 35.81
     end
   end
